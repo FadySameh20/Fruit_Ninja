@@ -45,7 +45,6 @@ public class GameEngine extends Subject {
     private int tempCurrentScore;
     private long bonusTime;
     private int count;
-    private int speed;
 
     public void setGamePlayWindow(GamePlayWindow gamePlayWindow, int temp) {
         this.gamePlayWindow = gamePlayWindow;
@@ -304,10 +303,6 @@ public class GameEngine extends Subject {
 
     public int getTempCurrentScore() {
         return tempCurrentScore;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
 }
