@@ -44,7 +44,6 @@ public class GameEngine extends Subject {
     private int tempHighScore;
     private int tempCurrentScore;
     private long bonusTime;
-    private int count;
 
     public void setGamePlayWindow(GamePlayWindow gamePlayWindow, int temp) {
         this.gamePlayWindow = gamePlayWindow;
@@ -141,7 +140,6 @@ public class GameEngine extends Subject {
                     RotateTransition rotateTransition = gamePlayWindow.setRotation(slicedGameObject.getImageView());
                     gamePlayWindow.getRotateTransitions().add(rotateTransition);
                     moveEngine(slicedGameObject, time);
-                    rand = rand + 1;
                     gameObject.setCommand(incrementCommand);
                     if (gamePlayWindow.getComboCount() >= 3) {
                         gameObject.swipe();
@@ -160,7 +158,6 @@ public class GameEngine extends Subject {
                         gamePlayWindow.saveGui();
                     }
                 }
-                gameObjects.remove(gameObject);
                 break;
             }
         }
@@ -191,8 +188,9 @@ public class GameEngine extends Subject {
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(16), t -> {
             setDifficulty();
             setGameOver();
-            if (count == rand - 1 && gameObject.getObjectType().equals(ENUM.DangerousBomb) && gameObject.isSliced() != null) {
+            if (gamePlayWindow.getGameObjects().size()==1 && gameObject.getObjectType().equals(ENUM.DangerousBomb) && gameObject.isSliced() != null) {
                 generateNextFruits(time);
+                gamePlayWindow.getGameObjects().remove(gameObject);
                 setGameOver();
                 timeline.stop();
             }
@@ -204,7 +202,7 @@ public class GameEngine extends Subject {
                 timeline.pause();
             }
             if (gameObject.getYLocation() >= 500) {
-                count++;
+                gamePlayWindow.getGameObjects().remove(gameObject);
                 gamePlayWindow.getTimelines().remove(timeline);
                 gamePlayWindow.getRotateTransitions().remove(rotateTransition);
                 if (gameObject.isSliced() == null) {
@@ -218,7 +216,7 @@ public class GameEngine extends Subject {
                 gameObject.setDropOff(true);
                 gamePlayWindow.getPane().getChildren().remove(gameObject.getImageView());
 
-                if (count >= rand && gameActions.getGameMemento().getLives() > 0) {
+                if (gamePlayWindow.getGameObjects().size()==0 && gameActions.getGameMemento().getLives() > 0) {
                     generateNextFruits(time);
                 }
                 setGameOver();
@@ -233,7 +231,6 @@ public class GameEngine extends Subject {
     private void generateNextFruits(Timeline time) {
         gamePlayWindow.getRotateTransitions().clear();
         gamePlayWindow.getGameObjects().clear();
-        count = 0;
         setRandom();
         time.setCycleCount(getRandom());
         setloaded(false);

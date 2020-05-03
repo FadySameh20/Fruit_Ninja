@@ -112,9 +112,9 @@ public class GameObject implements IGameObjects {
         if (gameActions.getGameMemento().getCurrentScore() < 15) {
             this.vInitial = random.nextInt(3) + 3;
         } else if (gameActions.getGameMemento().getCurrentScore() >= 15 && gameActions.getGameMemento().getCurrentScore() < 25) {
-            this.vInitial = random.nextInt(5) + 4;
+            this.vInitial = random.nextInt(3) + 5;
         } else if (gameActions.getGameMemento().getCurrentScore() >= 25) {
-            this.vInitial = random.nextInt(7) + 5;
+            this.vInitial = random.nextInt(3) + 7;
         }
 
     }
@@ -132,11 +132,11 @@ public class GameObject implements IGameObjects {
         Random random = new Random();
         GameAction gameActions=GameAction.getInstance();
         if (gameActions.getGameMemento().getCurrentScore() < 15) {
-            this.vFalling = random.nextInt(5) + 3;
+            this.vFalling = random.nextInt(4) + 4;
         } else if (gameActions.getGameMemento().getCurrentScore() >= 15 && gameActions.getGameMemento().getCurrentScore() < 25) {
-            this.vFalling = random.nextInt(7) + 4;
+            this.vFalling = random.nextInt(4) + 6;
         } else if (gameActions.getGameMemento().getCurrentScore() >= 25) {
-            this.vFalling = random.nextInt(9) + 5;
+            this.vFalling = random.nextInt(4) + 8;
         }
 
     }
